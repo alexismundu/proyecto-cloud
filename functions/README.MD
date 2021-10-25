@@ -21,6 +21,30 @@ Se encarga de enviar los correos por medio de la integración con sendgrid, esta
 
 Falta de implementar ya que es más compleja de lo que creímos y vamos a preguntar en clase sobre esto.
 
+
+## addLogs
+
+Se estarán guardando las acciones que se vayan tomando como logs, para lo cual usaremos una base de datos basada en documentos Cloudant en IBM cloud 
+<img width="863" alt="imagen" src="https://user-images.githubusercontent.com/48103674/138646025-dda461cb-9f8a-4585-8682-5d3d87ebaaf0.png">
+
+
+La estructura que se usara para los logs son:
 ```
-Edit
+{
+    log: some_text, 
+    date: some_date
+}
 ```
+
+Para poder realizar la inserción se usara IBM functions donde haremos uso de una seccuencia:
+<img width="1441" alt="imagen" src="https://user-images.githubusercontent.com/48103674/138646164-727347a9-3fc1-4d54-93dc-1222e9ac9d34.png">
+
+
+De la accion publica prediseñada para usar cloudant
+<img width="1468" alt="imagen" src="https://user-images.githubusercontent.com/48103674/138646100-58eb4dee-96a2-4506-a2f8-3b3a09696641.png">
+
+
+Y de una función que reciba y mapee los datos:
+<img width="626" alt="imagen" src="https://user-images.githubusercontent.com/48103674/138646205-d36bd5de-0d9b-490e-9bd3-55a8ca829970.png">
+
+
