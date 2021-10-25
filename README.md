@@ -4,16 +4,16 @@ Esta aplicación es para poder llevar aun mejor manejo de propiedades inmobiliar
 # Arquitectura
 ![ArquitecturaTecnología drawio](https://user-images.githubusercontent.com/76458618/138642739-b52b3d4e-db6c-4fdb-a8d1-8664c80728f5.png)
 
-#Inicio
+# Inicio
 + `cd frontend`
 + `npm i` 
 + `npm start` 
 + Con esto ya se va a poder iniciar la UI
 
-## Functions
+# Functions
 Son todas las funciones que hemos implementado para poder auxiliar la aplicación en ciertas funciones. Por el momento tenemos en AWS e IBM cloud.
 
-## AWS DynamoDB
+# AWS DynamoDB
 ![image](https://user-images.githubusercontent.com/76458618/138644582-f590ed77-ff7f-4122-8097-7226efc1d5b7.png)
 
 Tenemos dos tablas que son las principales y contienen toda la información vital para las funcionalidades de la aplicación, las cuales son:
@@ -25,5 +25,5 @@ Tenemos dos tablas que son las principales y contienen toda la información vita
 
 ![image](https://user-images.githubusercontent.com/76458618/138645045-31072743-2893-4252-89de-0f4f8011d435.png)
 
-## Frontend
+# Frontend
 Incluye la UI de la aplicación y está está diseñada para mobile first.
