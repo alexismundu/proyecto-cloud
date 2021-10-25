@@ -21,4 +21,6 @@ Se encarga de enviar los correos por medio de la integración con sendgrid, esta
 
 Falta de implementar ya que es más compleja de lo que creímos y vamos a preguntar en clase sobre esto.
 
+```
 Edit
+```
