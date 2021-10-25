@@ -45,6 +45,7 @@ De la accion publica prediseñada para usar cloudant
 
 
 Y de una función que reciba y mapee los datos:
+
 <img width="626" alt="imagen" src="https://user-images.githubusercontent.com/48103674/138646205-d36bd5de-0d9b-490e-9bd3-55a8ca829970.png">
 
 
