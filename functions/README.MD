@@ -20,3 +20,5 @@ PD: Esta función se planeaba activar usando EventBridge de AWS para que por med
 Se encarga de enviar los correos por medio de la integración con sendgrid, esta función es activada al momento en el que se ingresa un nuevo mensaje a la AWS Simple Queue que tenemos a la cual se le envían los mensajes desde notifyUsers.
 
 Falta de implementar ya que es más compleja de lo que creímos y vamos a preguntar en clase sobre esto.
+
+Edit
