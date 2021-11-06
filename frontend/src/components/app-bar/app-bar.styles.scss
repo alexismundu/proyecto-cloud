@@ -1,0 +1,17 @@
+@import 'src/styles/variables';
+
+.MuiBottomNavigation-root.app-bar-container {
+  background-color: $gray;
+}
+
+.MuiButtonBase-root.MuiBottomNavigationAction-root.Mui-selected {
+  color: $secondary-color;
+}
+
+.MuiButtonBase-root.MuiBottomNavigationAction-root.add-icon {
+  color: $primary-color;
+
+  .MuiSvgIcon-root {
+    font-size: 3rem;
+  }
+}
