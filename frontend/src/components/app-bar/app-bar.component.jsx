@@ -18,12 +18,12 @@ export default function AppBar() {
       }}
       className="app-bar-container"
     >
-      <BottomNavigationAction icon={<HomeIcon />} />
+      <BottomNavigationAction label="inicio" icon={<HomeIcon />} />
       <BottomNavigationAction
         className="add-icon-container"
         icon={<AddCircleIcon />}
       />
-      <BottomNavigationAction icon={<MapIcon />} />
+      <BottomNavigationAction label="propiedades" icon={<MapIcon />} />
     </BottomNavigation>
   );
 }
