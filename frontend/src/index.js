@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import HomePage from './pages/home-page';
 import AppBar from './components/app-bar';
 
 ReactDOM.render(
   <React.StrictMode>
     <div className="app-container">
-      <App />
+      <HomePage />
       <AppBar />
     </div>
   </React.StrictMode>,

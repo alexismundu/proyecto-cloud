@@ -8,12 +8,11 @@
   color: $secondary-color;
 }
 
-.MuiButtonBase-root.MuiBottomNavigationAction-root.add-icon {
+.MuiButtonBase-root.MuiBottomNavigationAction-root.add-icon-container {
   color: $primary-color;
   background-color: $background-color;
   border-bottom-left-radius: 100%;
   border-bottom-right-radius: 100%;
-  width: 50%;
 
   .MuiSvgIcon-root {
     font-size: 3rem;
