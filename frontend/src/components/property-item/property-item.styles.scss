@@ -1,0 +1,49 @@
+$border-radius: 20px;
+
+.property-item {
+  width: 80%;
+  position: relative;
+  z-index: 0;
+  margin-bottom: 20px;
+  color: #fff;
+
+  &__img {
+    width: 100%;
+    z-index: -1;
+    border-top-left-radius: $border-radius;
+    border-top-right-radius: $border-radius;
+  }
+
+  &__info {
+    margin-top: -20px;
+    z-index: 1;
+    position: relative;
+    background-color: black;
+    border-bottom-left-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
+    padding: 7px 10px;
+    display: flex;
+    align-items: center;
+    text-align: left;
+    opacity: 0.6;
+
+    &__left-section {
+      width: 95%;
+      &__name {
+        font-size: 20px;
+      }
+
+      &__description {
+        font-size: 12px;
+      }
+    }
+
+    &__right-section {
+      height: 70px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      margin-left: 3px;
+    }
+  }
+}
