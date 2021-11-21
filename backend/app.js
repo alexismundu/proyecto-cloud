@@ -36,7 +36,5 @@ if (process.env.NODE_ENV === 'production' || process.env.inbuild == 'true' || pr
 app.use((req, res) => res.status(404).send({ ok: false, error: 'Not Found' }));
 
 
-app.use('/', apiRouter);
-app.use('/users', usersRouter);
 
 module.exports = app;
