@@ -1,0 +1,15 @@
+.create-property-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__title {
+    padding-top: 5%;
+  }
+
+  &__create-property-form {
+    &__btn {
+      margin-top: 20px;
+    }
+  }
+}

@@ -16,5 +16,15 @@ code {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+
+  &__upper {
+    height: calc(100% - 56px);
+  }
+
+  &__lower {
+    height: 56px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
 }
