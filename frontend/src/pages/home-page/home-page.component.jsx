@@ -1,6 +1,7 @@
 import React from 'react';
 import './home-page.styles.scss';
 import PropertiesList from '../../components/properties-list';
+import LogoutButton from '../../components/logout-button';
 
 function HomePage({ properties = [], isLoading = true }) {
   console.log(properties);
@@ -13,7 +14,12 @@ function HomePage({ properties = [], isLoading = true }) {
       {isLoading ? (
         <h1>Loading...</h1>
       ) : properties !== [] ? (
-        <PropertiesList properties={properties} />
+        <>
+          <div className="home-page-container__logout-btn">
+            <LogoutButton />
+          </div>
+          <PropertiesList properties={properties} />
+        </>
       ) : (
         <h1>Comienza agregando tu primera propiedad</h1>
       )}
