@@ -3,7 +3,7 @@ import './home-page.styles.scss';
 import PropertiesList from '../../components/properties-list';
 import LogoutButton from '../../components/logout-button';
 
-function HomePage({ properties = [], isLoading = true }) {
+function HomePage({ properties = [] }) {
   console.log(properties);
   return (
     <div
@@ -11,9 +11,7 @@ function HomePage({ properties = [], isLoading = true }) {
         !!properties ? 'home-page-container' : 'home-page-container--only-text'
       }
     >
-      {isLoading ? (
-        <h1>Loading...</h1>
-      ) : properties !== [] ? (
+      {properties !== [] ? (
         <>
           <div className="home-page-container__logout-btn">
             <LogoutButton />

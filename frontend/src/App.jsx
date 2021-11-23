@@ -9,27 +9,37 @@ import HomePage from './pages/home-page';
 import NewPropertyPage from './pages/create-property';
 import LoginPage from './pages/login';
 import AppBar from './components/app-bar';
+import WithSpinner from './components/with-spinner';
 
 import './index.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+const HomePageWithSpinner = (props) => {
+  return WithSpinner(HomePage)(props);
+};
+
 const App = () => {
   const [properties, setProperties] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingProperties, setIsLoadingProperties] = useState(true);
 
-  const { isAuthenticated, isLoading: isAuthenticationLoading } = useAuth0();
-  console.log(isAuthenticated);
+  const {
+    isAuthenticated,
+    isLoading: isAuthenticationLoading,
+    user,
+  } = useAuth0();
 
   useEffect(() => {
-    setIsLoading(false);
-    setProperties(userProperties);
-  }, []);
+    if (user) {
+      setTimeout(() => {
+        setProperties(userProperties);
+        setIsLoadingProperties(false);
+      }, 2000);
+    }
+  }, [user]);
 
   const handleAddProperty = (newProperty) => {
     setProperties([...properties, newProperty]);
   };
-
-  if (isAuthenticationLoading) return <h1>Loading</h1>;
 
   return (
     <>
@@ -43,7 +53,10 @@ const App = () => {
                 <Route
                   path={routes.homePage}
                   element={
-                    <HomePage properties={properties} isLoading={isLoading} />
+                    <HomePageWithSpinner
+                      properties={properties}
+                      isLoading={isLoadingProperties || isAuthenticationLoading}
+                    />
                   }
                 />
                 <Route
