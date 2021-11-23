@@ -1,23 +1,26 @@
-import React from "react";
-import PhoneIcon from "@mui/icons-material/Phone";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
+import React from 'react';
+import PhoneIcon from '@mui/icons-material/Phone';
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
 
-import "./property-item.styles.scss";
+import './property-item.styles.scss';
 
-const PropertyItem = ({ name, thumbnail, address }) => {
+const PropertyItem = ({ id, thumbnail, address, details, isChecked }) => {
   return (
     <div className="property-item">
-      <img src={thumbnail} alt={address} className="property-item__img" />
+      {thumbnail && (
+        <img src={thumbnail} alt={id} className="property-item__img" />
+      )}
       <div className="property-item__info">
         <div className="property-item__info__left-section">
-          <h3 className="property-item__info__left-section__name">{name}</h3>
+          <h3 className="property-item__info__left-section__name">{address}</h3>
           <h6 className="property-item__info__left-section__description">
-            {address}
+            {details}
           </h6>
         </div>
         <div className="property-item__info__right-section">
           <PhoneIcon />
-          <LocationOnIcon />
+          {isChecked ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
         </div>
       </div>
     </div>

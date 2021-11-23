@@ -5,6 +5,8 @@
   background-color: $background-color;
   text-align: center;
   overflow-y: scroll;
+  padding-top: $global-top-gutter;
+
   &--only-text {
     display: flex;
     align-items: center;

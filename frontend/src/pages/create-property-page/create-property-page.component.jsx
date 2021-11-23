@@ -3,7 +3,7 @@ import FormInput from '../../components/form-input';
 import CustomButton from '../../components/custom-button';
 import './create-property-page.styles.scss';
 
-const CreatePropertyPage = () => {
+const CreatePropertyPage = ({ handleAddProperty }) => {
   const [address, setAddress] = useState('');
   const [phone, setPhone] = useState('');
   const [details, setDetails] = useState('');
@@ -18,6 +18,7 @@ const CreatePropertyPage = () => {
     event.preventDefault();
 
     try {
+      handleAddProperty({ id: 2, address, phone, details, isChecked: false });
       console.log('submit completed!');
       setDefaultState();
     } catch (error) {
