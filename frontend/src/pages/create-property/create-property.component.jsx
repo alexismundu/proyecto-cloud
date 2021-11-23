@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import FormInput from '../../components/form-input';
 import CustomButton from '../../components/custom-button';
-import './create-property-page.styles.scss';
+import './create-property.styles.scss';
 
 const CreatePropertyPage = ({ handleAddProperty }) => {
   const [address, setAddress] = useState('');
