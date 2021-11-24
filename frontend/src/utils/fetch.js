@@ -15,6 +15,7 @@ export const queryAPI = async ({ getAccessTokenSilently, scope = '' }) => {
       },
     });
 
+    if (!res.ok) return;
     const resJSON = await res.json();
     return resJSON;
   } catch (e) {

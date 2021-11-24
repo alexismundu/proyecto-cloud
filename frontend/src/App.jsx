@@ -4,6 +4,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 // import userProperties from './data/propiedades';
 import routes from './routes';
+import { queryAPI } from './utils/fetch';
 
 import HomePage from './pages/home-page';
 import NewPropertyPage from './pages/create-property';
@@ -26,16 +27,15 @@ const App = () => {
     isAuthenticated,
     isLoading: isAuthenticationLoading,
     user,
+    getAccessTokenSilently,
   } = useAuth0();
 
   useEffect(() => {
-    if (user) {
-      setTimeout(() => {
-        // setProperties(userProperties);
-        setIsLoadingProperties(false);
-      }, 2000);
-    }
-  }, [user]);
+    queryAPI({ getAccessTokenSilently }).then((response) => {
+      setIsLoadingProperties(false);
+      if (response) setProperties(response.data);
+    });
+  }, [getAccessTokenSilently, user]);
 
   const handleAddProperty = (newProperty) => {
     setProperties([newProperty, ...properties]);
