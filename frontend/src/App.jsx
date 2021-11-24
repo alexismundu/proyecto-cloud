@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 
-import userProperties from './data/propiedades';
+// import userProperties from './data/propiedades';
 import routes from './routes';
 
 import HomePage from './pages/home-page';
@@ -19,7 +19,7 @@ const HomePageWithSpinner = (props) => {
 };
 
 const App = () => {
-  const [properties, setProperties] = useState(null);
+  const [properties, setProperties] = useState([]);
   const [isLoadingProperties, setIsLoadingProperties] = useState(true);
 
   const {
@@ -31,7 +31,7 @@ const App = () => {
   useEffect(() => {
     if (user) {
       setTimeout(() => {
-        setProperties(userProperties);
+        // setProperties(userProperties);
         setIsLoadingProperties(false);
       }, 2000);
     }

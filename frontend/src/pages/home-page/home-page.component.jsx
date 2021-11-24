@@ -4,18 +4,16 @@ import PropertiesList from '../../components/properties-list';
 import LogoutButton from '../../components/logout-button';
 
 function HomePage({ properties = [] }) {
-  console.log(properties);
   return (
     <div
-      className={
-        !!properties ? 'home-page-container' : 'home-page-container--only-text'
+      className={`home-page-container ${properties.length > 0 ? '' : 'only-text'}`
       }
     >
-      {properties !== [] ? (
+      <div className="home-page-container__logout-btn">
+        <LogoutButton />
+      </div>
+      {properties.length > 0 ? (
         <>
-          <div className="home-page-container__logout-btn">
-            <LogoutButton />
-          </div>
           <PropertiesList properties={properties} />
         </>
       ) : (
