@@ -1,16 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Auth0Provider } from '@auth0/auth0-react';
+
+import App from './App';
+
+import routes from './routes';
+
 import './index.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import HomePage from './pages/home-page';
-import AppBar from './components/app-bar';
+
+const domain = process.env.REACT_APP_AUTH0_DOMAIN;
+const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
 
 ReactDOM.render(
-  <React.StrictMode>
-    <div className="app-container">
-      <HomePage />
-      <AppBar />
-    </div>
-  </React.StrictMode>,
+  <Auth0Provider
+    domain={domain}
+    clientId={clientId}
+    redirectUri={`${process.env.REACT_APP_FRONTEND_URL}${routes.homePage}`}
+  >
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </Auth0Provider>,
   document.getElementById('root')
 );

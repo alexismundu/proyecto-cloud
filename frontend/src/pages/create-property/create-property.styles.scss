@@ -1,0 +1,17 @@
+@import 'src/styles/variables';
+
+.create-property-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__title {
+    padding-top: $global-top-gutter;
+  }
+
+  &__create-property-form {
+    &__btn {
+      margin-top: 20px;
+    }
+  }
+}

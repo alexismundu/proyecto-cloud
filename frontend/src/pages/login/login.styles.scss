@@ -1,0 +1,15 @@
+@import 'src/styles/variables';
+
+.login-page {
+  height: 100vh;
+  width: 100vw;
+  background-color: $background-color;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  &__title {
+    margin-bottom: 40px;
+  }
+}
