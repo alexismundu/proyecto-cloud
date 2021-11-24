@@ -27,7 +27,6 @@ const jwtCheck = jwt({
   algorithms: ['RS256'],
 });
 
-app.use(jwtCheck);
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -35,7 +34,7 @@ app.use(cookieParser());
 app.use(cors());
 
 // routes
-app.use('/api', apiRouter);
+app.use('/api', jwtCheck, apiRouter);
 app.use('/health', healthRoutes);
 app.use('/swagger', swaggerRoutes);
 

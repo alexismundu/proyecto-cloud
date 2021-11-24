@@ -1,5 +1,11 @@
-export const queryAPI = async ({ getAccessTokenSilently, scope = '' }) => {
-  const apiURI = `${process.env.REACT_APP_BACKEND_URL}/api/`;
+const baseApiURI = `${process.env.REACT_APP_BACKEND_URL}/api/`;
+
+export const queryAPI = async ({
+  getAccessTokenSilently,
+  restURI = '',
+  scope = '',
+}) => {
+  const apiURI = `${baseApiURI}${restURI}`;
 
   try {
     const accessToken = await getAccessTokenSilently({
@@ -21,4 +27,14 @@ export const queryAPI = async ({ getAccessTokenSilently, scope = '' }) => {
   } catch (e) {
     console.log(e.message);
   }
+};
+
+export const queryUserProperties = async ({
+  getAccessTokenSilently,
+  userId,
+}) => {
+  return await queryAPI({
+    getAccessTokenSilently,
+    restURI: `users/${userId}/properties`,
+  });
 };

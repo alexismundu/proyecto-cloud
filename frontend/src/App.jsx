@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 
 // import userProperties from './data/propiedades';
 import routes from './routes';
-import { queryAPI } from './utils/fetch';
+import { queryUserProperties } from './utils/fetch';
 
 import HomePage from './pages/home-page';
 import NewPropertyPage from './pages/create-property';
@@ -31,11 +36,16 @@ const App = () => {
   } = useAuth0();
 
   useEffect(() => {
-    queryAPI({ getAccessTokenSilently }).then((response) => {
-      setIsLoadingProperties(false);
-      if (response) setProperties(response.data);
-    });
-  }, [getAccessTokenSilently, user]);
+    if (user) {
+      queryUserProperties({ getAccessTokenSilently, userId: user.sub }).then(
+        (response) => {
+          setIsLoadingProperties(false);
+          console.log(response);
+          if (response) setProperties(response.data);
+        }
+      );
+    }
+  }, [user, getAccessTokenSilently]);
 
   const handleAddProperty = (newProperty) => {
     setProperties([newProperty, ...properties]);
@@ -51,6 +61,14 @@ const App = () => {
             <div className="app-container__upper">
               <Routes>
                 <Route
+                  exact
+                  path={routes.createProperty}
+                  element={
+                    <NewPropertyPage handleAddProperty={handleAddProperty} />
+                  }
+                />
+                <Route
+                  exact
                   path={routes.homePage}
                   element={
                     <HomePageWithSpinner
@@ -59,12 +77,7 @@ const App = () => {
                     />
                   }
                 />
-                <Route
-                  path={routes.createProperty}
-                  element={
-                    <NewPropertyPage handleAddProperty={handleAddProperty} />
-                  }
-                />
+                <Route path="/" element={<Navigate to={routes.homePage} />} />
               </Routes>
             </div>
             <div className="app-container__lower">
