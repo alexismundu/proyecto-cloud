@@ -7,11 +7,13 @@ const CreatePropertyPage = ({ handleAddProperty }) => {
   const [address, setAddress] = useState('');
   const [phone, setPhone] = useState('');
   const [details, setDetails] = useState('');
+  const [image, setImage] = useState('');
 
   const setDefaultState = () => {
     setAddress('');
     setPhone('');
     setDetails('');
+    setImage('');
   };
 
   const handleSubmit = async (event) => {
@@ -36,8 +38,12 @@ const CreatePropertyPage = ({ handleAddProperty }) => {
       case 'phone':
         setPhone(value);
         break;
-      default:
+      case 'details':
         setDetails(value);
+        break;
+      default:
+        console.log(value);
+        setImage(value);
         break;
     }
   };
@@ -75,7 +81,7 @@ const CreatePropertyPage = ({ handleAddProperty }) => {
         />
         <label name="image">Imagen</label>
         <br />
-        <input type="file" name="image" />
+        <input type="file" name="image" value={image} onChange={handleChange} />
         <CustomButton
           type="submit"
           className="create-property-page__create-property-form__btn"
