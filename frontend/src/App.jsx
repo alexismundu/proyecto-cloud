@@ -38,7 +38,7 @@ const App = () => {
   }, [user]);
 
   const handleAddProperty = (newProperty) => {
-    setProperties([...properties, newProperty]);
+    setProperties([newProperty, ...properties]);
   };
 
   return (
