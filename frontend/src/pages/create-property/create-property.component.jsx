@@ -1,6 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useAuth0 } from "@auth0/auth0-react";
+
 import FormInput from '../../components/form-input';
 import CustomButton from '../../components/custom-button';
+import { queryAPI } from '../../utils/fetch';
+
 import './create-property.styles.scss';
 
 const CreatePropertyPage = ({ handleAddProperty }) => {
@@ -8,6 +12,11 @@ const CreatePropertyPage = ({ handleAddProperty }) => {
   const [phone, setPhone] = useState('');
   const [details, setDetails] = useState('');
   const [image, setImage] = useState('');
+  const {getAccessTokenSilently} = useAuth0();
+
+  useEffect(() => {
+    queryAPI({getAccessTokenSilently}).then(resJSON => {console.log(resJSON.data)})
+  }, [getAccessTokenSilently])
 
   const setDefaultState = () => {
     setAddress('');

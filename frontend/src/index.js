@@ -17,6 +17,7 @@ ReactDOM.render(
     domain={domain}
     clientId={clientId}
     redirectUri={`${process.env.REACT_APP_FRONTEND_URL}${routes.homePage}`}
+    audience={`${process.env.REACT_APP_BACKEND_URL}`}
   >
     <React.StrictMode>
       <App />
