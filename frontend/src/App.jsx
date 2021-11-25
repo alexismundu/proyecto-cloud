@@ -7,7 +7,6 @@ import {
 } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 
-// import userProperties from './data/propiedades';
 import routes from './routes';
 import { queryUserProperties } from './utils/fetch';
 
@@ -40,7 +39,6 @@ const App = () => {
       queryUserProperties({ getAccessTokenSilently, userId: user.sub }).then(
         (response) => {
           setIsLoadingProperties(false);
-          console.log(response);
           if (response) setProperties(response.data);
         }
       );
