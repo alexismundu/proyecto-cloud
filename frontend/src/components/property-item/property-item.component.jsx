@@ -2,10 +2,18 @@ import React from 'react';
 import PhoneIcon from '@mui/icons-material/Phone';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import './property-item.styles.scss';
 
-const PropertyItem = ({ id, thumbnail, address, details, isChecked }) => {
+const PropertyItem = ({
+  id,
+  thumbnail,
+  address,
+  details,
+  isChecked,
+  phone,
+}) => {
   return (
     <div className="property-item">
       {thumbnail && (
@@ -19,8 +27,9 @@ const PropertyItem = ({ id, thumbnail, address, details, isChecked }) => {
           </h6>
         </div>
         <div className="property-item__info__right-section">
-          <PhoneIcon />
+          <PhoneIcon onClick={() => window.open(`tel:${phone}`)} />
           {isChecked ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
+          <DeleteIcon />
         </div>
       </div>
     </div>
