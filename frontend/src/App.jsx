@@ -36,24 +36,28 @@ const App = () => {
 
   useEffect(() => {
     if (user) {
-      queryUserProperties({ getAccessTokenSilently, userId: user.sub }).then(
-        (response) => {
-          setIsLoadingProperties(false);
-          if (response) setProperties(response.data);
-        }
-      );
+      fetchProperties();
     }
-  }, [user, getAccessTokenSilently]);
+  }, [user]);
 
-  const handleAddProperty = (newProperty) => {
+  const fetchProperties = () => {
+    queryUserProperties({ getAccessTokenSilently, userId: user.sub }).then(
+      (response) => {
+        setIsLoadingProperties(false);
+        if (response) setProperties(response.data);
+      }
+    );
+  };
+
+  const handleAddProperty = async (newProperty) => {
     if (user) {
-      createPropertyInDb({
+      await createPropertyInDb({
         getAccessTokenSilently,
         data: newProperty,
         userId: user.sub,
       });
+      await fetchProperties();
     }
-    // setProperties([newProperty, ...properties]);
   };
 
   return (
