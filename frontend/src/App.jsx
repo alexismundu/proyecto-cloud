@@ -53,7 +53,7 @@ const App = () => {
         userId: user.sub,
       });
     }
-    setProperties([newProperty, ...properties]);
+    // setProperties([newProperty, ...properties]);
   };
 
   return (
