@@ -6,18 +6,13 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import './property-item.styles.scss';
 
-const PropertyItem = ({
-  id,
-  thumbnail,
-  address,
-  details,
-  isChecked,
-  phone,
-}) => {
+const PropertyItem = (props) => {
+  const { thumbnail, address, details, isChecked, phone, handleIsChecked } =
+    props;
   return (
     <div className="property-item">
       {thumbnail && (
-        <img src={thumbnail} alt={id} className="property-item__img" />
+        <img src={thumbnail} alt={thumbnail} className="property-item__img" />
       )}
       <div className="property-item__info">
         <div className="property-item__info__left-section">
@@ -28,7 +23,11 @@ const PropertyItem = ({
         </div>
         <div className="property-item__info__right-section">
           <PhoneIcon onClick={() => window.open(`tel:${phone}`)} />
-          {isChecked ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
+          {isChecked ? (
+            <CheckBoxIcon onClick={() => handleIsChecked(props)} />
+          ) : (
+            <CheckBoxOutlineBlankIcon onClick={() => handleIsChecked(props)} />
+          )}
           <DeleteIcon />
         </div>
       </div>

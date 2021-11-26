@@ -60,6 +60,17 @@ const App = () => {
     }
   };
 
+  const handleUpdatePropertyIsChecked = async (property) => {
+    setProperties((prevProperties) =>
+      prevProperties.map((prevProperty) =>
+        property.id === prevProperty.id
+          ? { ...prevProperty, isChecked: !prevProperty.isChecked }
+          : prevProperty
+      )
+    );
+    console.log('updating isChecked in Dynamo', property); // TODO(alexismundu): make api call to update dynamo
+  };
+
   return (
     <>
       {!isAuthenticated ? (
@@ -83,6 +94,7 @@ const App = () => {
                     <HomePageWithSpinner
                       properties={properties}
                       isLoading={isLoadingProperties || isAuthenticationLoading}
+                      handleIsChecked={handleUpdatePropertyIsChecked}
                     />
                   }
                 />
