@@ -1,9 +1,11 @@
 const baseApiURI = `${process.env.REACT_APP_BACKEND_URL}/api/`;
 
-export const queryAPI = async ({
+export const fetchAPI = async ({
   getAccessTokenSilently,
   restURI = '',
   scope = '',
+  method = 'GET',
+  data = '',
 }) => {
   const apiURI = `${baseApiURI}${restURI}`;
 
@@ -13,13 +15,21 @@ export const queryAPI = async ({
       scope,
     });
 
-    const res = await fetch(apiURI, {
+    const options = {
+      method,
       mode: 'cors',
       headers: {
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${accessToken}`,
         'Access-Control-Allow-Origin': '*',
       },
-    });
+    };
+
+    if (method === 'POST') {
+      options['body'] = JSON.stringify(data);
+    }
+
+    const res = await fetch(apiURI, options);
 
     if (!res.ok) return;
     const resJSON = await res.json();
@@ -29,12 +39,30 @@ export const queryAPI = async ({
   }
 };
 
+export const postAPI = async (attributes) => {
+  return await fetchAPI({ ...attributes, method: 'POST' });
+};
+
 export const queryUserProperties = async ({
   getAccessTokenSilently,
   userId,
 }) => {
-  return await queryAPI({
+  return await fetchAPI({
     getAccessTokenSilently,
     restURI: `users/${userId}/properties`,
   });
+};
+
+export const createPropertyInDb = async ({
+  getAccessTokenSilently,
+  data,
+  userId,
+}) => {
+  const res = await postAPI({
+    getAccessTokenSilently,
+    data,
+    restURI: `users/${userId}/properties`,
+  });
+  console.log(res);
+  return res;
 };

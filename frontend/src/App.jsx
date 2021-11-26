@@ -8,7 +8,7 @@ import {
 import { useAuth0 } from '@auth0/auth0-react';
 
 import routes from './routes';
-import { queryUserProperties } from './utils/fetch';
+import { queryUserProperties, createPropertyInDb } from './utils/fetch';
 
 import HomePage from './pages/home-page';
 import NewPropertyPage from './pages/create-property';
@@ -46,6 +46,13 @@ const App = () => {
   }, [user, getAccessTokenSilently]);
 
   const handleAddProperty = (newProperty) => {
+    if (user) {
+      createPropertyInDb({
+        getAccessTokenSilently,
+        data: newProperty,
+        userId: user.sub,
+      });
+    }
     setProperties([newProperty, ...properties]);
   };
 

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth0 } from "@auth0/auth0-react";
+import { useAuth0 } from '@auth0/auth0-react';
 
 import FormInput from '../../components/form-input';
 import CustomButton from '../../components/custom-button';
-import { queryAPI } from '../../utils/fetch';
+import { fetchAPI } from '../../utils/fetch';
 
 import './create-property.styles.scss';
 
@@ -11,25 +11,33 @@ const CreatePropertyPage = ({ handleAddProperty }) => {
   const [address, setAddress] = useState('');
   const [phone, setPhone] = useState('');
   const [details, setDetails] = useState('');
-  const [image, setImage] = useState('');
-  const {getAccessTokenSilently} = useAuth0();
+  const [thumbnail, setThumbnail] = useState('');
+  const { getAccessTokenSilently } = useAuth0();
 
   useEffect(() => {
-    queryAPI({getAccessTokenSilently}).then(resJSON => {console.log(resJSON.data)})
-  }, [getAccessTokenSilently])
+    fetchAPI({ getAccessTokenSilently }).then((resJSON) => {
+      console.log(resJSON.data);
+    });
+  }, [getAccessTokenSilently]);
 
   const setDefaultState = () => {
     setAddress('');
     setPhone('');
     setDetails('');
-    setImage('');
+    setThumbnail('');
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      handleAddProperty({ id: 2, address, phone, details, isChecked: false });
+      handleAddProperty({
+        address,
+        phone,
+        details,
+        isChecked: false,
+        thumbnail,
+      });
       console.log('submit completed!');
       setDefaultState();
     } catch (error) {
@@ -52,7 +60,7 @@ const CreatePropertyPage = ({ handleAddProperty }) => {
         break;
       default:
         console.log(value);
-        setImage(value);
+        setThumbnail(value);
         break;
     }
   };
@@ -88,9 +96,14 @@ const CreatePropertyPage = ({ handleAddProperty }) => {
           onChange={handleChange}
           label="Agregar detalles"
         />
-        <label name="image">Imagen</label>
+        <label name="thumbnail">Imagen</label>
         <br />
-        <input type="file" name="image" value={image} onChange={handleChange} />
+        <input
+          type="file"
+          name="thumbnail"
+          value={thumbnail}
+          onChange={handleChange}
+        />
         <CustomButton
           type="submit"
           className="create-property-page__create-property-form__btn"
