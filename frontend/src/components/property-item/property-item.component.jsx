@@ -10,7 +10,7 @@ const PropertyItem = (props) => {
   const { id, thumbnail, address, details, isChecked, phone, handleIsChecked, handleADeleteProperty } =
     props;
 
-  console.log(`props.id`, props.id)
+  console.log(`isChecked`, isChecked)
 
   const handleDelete = async (event) => {
     event.preventDefault();
@@ -21,7 +21,7 @@ const PropertyItem = (props) => {
         address,
         phone,
         details,
-        isChecked: false,
+        isChecked,
         thumbnail,
       });
       console.log('delete completed!');
@@ -29,6 +29,31 @@ const PropertyItem = (props) => {
       console.log('error deleting property', error.message);
     }
   };
+
+  const handleCheck = async (check) => {
+
+    try {
+      handleIsChecked({
+        id,
+        address,
+        phone,
+        details,
+        isChecked,
+        thumbnail,
+      }, {
+        id,
+        address,
+        phone,
+        details,
+        isChecked: check,
+        thumbnail,
+      });
+      console.log('check completed!');
+    } catch (error) {
+      console.log('error deleting property', error.message);
+    }
+
+  }
 
   return (
     <div className="property-item">
@@ -45,9 +70,9 @@ const PropertyItem = (props) => {
         <div className="property-item__info__right-section">
           <PhoneIcon onClick={() => window.open(`tel:${phone}`)} />
           {isChecked ? (
-            <CheckBoxIcon onClick={() => handleIsChecked(props)} />
+            <CheckBoxIcon onClick={() => handleCheck(false)} />
           ) : (
-            <CheckBoxOutlineBlankIcon onClick={() => handleIsChecked(props)} />
+            <CheckBoxOutlineBlankIcon onClick={() => handleCheck(true)} />
           )}
           <DeleteIcon onClick={handleDelete} />
         </div>

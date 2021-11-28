@@ -61,27 +61,23 @@ const createProperty = async ({
 const updateProperty = async ({
   userId,
   propertyId,
-  // address,
-  // phone,
-  // details,
-  // thumbnail,
-  isChecked,
+  new_data,
 }) => {
   try {
     const params = {
       TableName,
-      Key: {
+      Item: {
         id: { S: propertyId },
         userId: { S: userId },
+        address: { S: new_data.address },
+        phone: { S: new_data.phone },
+        details: { S: new_data.details },
+        thumbnail: { S: new_data.thumbnail },
+        isChecked: { BOOL: new_data.isChecked },
       },
-      UpdateExpression: "set isChecked = :c", // For example, "'set Title = :t, Subtitle = :s'"
-      ExpressionAttributeValues: {
-          ":c": "isChecked", // For example ':t' : 'NEW_TITLE'
-      },
-      ReturnValues: "ALL_NEW"
     };
 
-    const awsData = await runDbCommand(new UpdateItemCommand(params));
+    const awsData = await runDbCommand(new PutItemCommand(params));
     console.log(`Property id: ${propertyId} succesfully checked in DynamoDB`);
     return awsData;
   } catch (error) {

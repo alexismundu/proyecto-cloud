@@ -21,7 +21,7 @@ router.post('/:userId/properties', (req, res) => {
 });
 
 router.put('/:userId/checkProperty/:propertyId', (req, res) => {
-  updateProperty({ userId: req.params.userId, propertyId: req.params.propertyId, ...req.body }).then((data) =>
+  updateProperty({ userId: req.params.userId, propertyId: req.params.propertyId, new_data: req.body }).then((data) =>
     res.send({ data })
   );
 });

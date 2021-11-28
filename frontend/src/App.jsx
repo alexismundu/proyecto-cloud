@@ -34,6 +34,8 @@ const App = () => {
     getAccessTokenSilently,
   } = useAuth0();
 
+
+
   useEffect(() => {
     if (user) {
       fetchProperties();
@@ -58,14 +60,14 @@ const App = () => {
         userId: user.sub,
       });
       await fetchProperties();
+
     }
   };
 
-  const handleCheckProperty = async (oldProperty, updatedProperty) => {
+  const handleCheckProperty = async (updatedProperty) => {
     if (user) {
       await updatePropertyInDb({
         getAccessTokenSilently,
-        old_data: oldProperty,
         new_data: updatedProperty,
         userId: user.sub,
       });
@@ -84,16 +86,16 @@ const App = () => {
     }
   };
 
-  const handleUpdatePropertyIsChecked = async (property) => {
-    setProperties((prevProperties) =>
-      prevProperties.map((prevProperty) =>
-        property.id === prevProperty.id
-          ? { ...prevProperty, isChecked: !prevProperty.isChecked }
-          : prevProperty
-      )
-    );
-    console.log('updating isChecked in Dynamo', property); // TODO(alexismundu): make api call to update dynamo
-  };
+  // const handleUpdatePropertyIsChecked = async (property) => {
+  //   setProperties((prevProperties) =>
+  //     prevProperties.map((prevProperty) =>
+  //       property.id === prevProperty.id
+  //         ? { ...prevProperty, isChecked: !prevProperty.isChecked }
+  //         : prevProperty
+  //     )
+  //   );
+  //   console.log('updating isChecked in Dynamo', property); // TODO(alexismundu): make api call to update dynamo
+  // };
 
   return (
     <>
@@ -119,7 +121,8 @@ const App = () => {
                       handleADeleteProperty={handleADeleteProperty}
                       properties={properties}
                       isLoading={isLoadingProperties || isAuthenticationLoading}
-                      handleIsChecked={handleUpdatePropertyIsChecked}
+                      // handleIsChecked={handleUpdatePropertyIsChecked}
+                      handleIsChecked={handleCheckProperty}
                     />
                   }
                 />
