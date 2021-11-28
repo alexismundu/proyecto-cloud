@@ -64,10 +64,11 @@ const App = () => {
     }
   };
 
-  const handleCheckProperty = async (updatedProperty) => {
+  const handleCheckProperty = async (oldProperty, updatedProperty) => {
     if (user) {
       await updatePropertyInDb({
         getAccessTokenSilently,
+        old_data: oldProperty,
         new_data: updatedProperty,
         userId: user.sub,
       });

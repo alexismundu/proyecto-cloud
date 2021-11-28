@@ -10,7 +10,6 @@ const PropertyItem = (props) => {
   const { id, thumbnail, address, details, isChecked, phone, handleIsChecked, handleADeleteProperty } =
     props;
 
-  console.log(`isChecked`, isChecked)
 
   const handleDelete = async (event) => {
     event.preventDefault();

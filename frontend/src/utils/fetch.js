@@ -9,8 +9,6 @@ export const fetchAPI = async ({
 }) => {
   const apiURI = `${baseApiURI}${restURI}`;
 
-  console.log(`data`, data)
-
   try {
     const accessToken = await getAccessTokenSilently({
       audience: process.env.REACT_APP_BACKEND_URL,
@@ -79,11 +77,10 @@ export const createPropertyInDb = async ({
 
 export const updatePropertyInDb = async ({
   getAccessTokenSilently,
+  old_data,
   new_data,
   userId,
 }) => {
-  // console.log(`old_data`, old_data)
-  // console.log(`new_data`, new_data)
   const res = await putAPI({
     getAccessTokenSilently,
     data: new_data ,
