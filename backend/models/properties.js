@@ -2,6 +2,7 @@ const { runDbCommand, runDbPutItem, awsItemsToJsObj } = require('../aws');
 const {
   ScanCommand,
   PutItemCommand,
+  UpdateItemCommand,
   DeleteItemCommand
 } = require('@aws-sdk/client-dynamodb');
 const { v4: uuidv4 } = require('uuid');
@@ -19,7 +20,7 @@ const getUserProperties = async (userId) => {
     FilterExpression: 'userId = :userId',
     // Define the expression attribute value, which are substitutes for the values you want to compare.
     ExpressionAttributeValues: {
-      ':userId': { N: userId },
+      ':userId': { S: userId },
     },
     // Set the projection expression, which are the attributes that you want.
     ProjectionExpression: 'id, address, phone, details, thumbnail, isChecked',
@@ -27,7 +28,7 @@ const getUserProperties = async (userId) => {
   };
 
   const awsData = await runDbCommand(new ScanCommand(params));
-  console.log(`awsData`, JSON.stringify(awsData.Items[0]))
+  console.log(`Properties found for the user ${userId}: `, awsData?.Count)
   return awsItemsToJsObj(awsData);
 };
 
@@ -57,14 +58,44 @@ const createProperty = async ({
   return awsData;
 };
 
+const updateProperty = async ({
+  userId,
+  propertyId,
+  // address,
+  // phone,
+  // details,
+  // thumbnail,
+  isChecked,
+}) => {
+  try {
+    const params = {
+      TableName,
+      Key: {
+        id: { S: propertyId },
+        userId: { S: userId },
+      },
+      UpdateExpression: "set isChecked = :c", // For example, "'set Title = :t, Subtitle = :s'"
+      ExpressionAttributeValues: {
+          ":c": "isChecked", // For example ':t' : 'NEW_TITLE'
+      },
+      ReturnValues: "ALL_NEW"
+    };
+
+    const awsData = await runDbCommand(new UpdateItemCommand(params));
+    console.log(`Property id: ${propertyId} succesfully checked in DynamoDB`);
+    return awsData;
+  } catch (error) {
+    console.log(err)
+  }
+};
 const deleteProperty = async ({
   userId,
   propertyId,
-  address,
-  phone,
-  details,
-  thumbnail,
-  isChecked,
+  // address,
+  // phone,
+  // details,
+  // thumbnail,
+  // isChecked,
 }) => {
   try {
     const params = {
@@ -76,10 +107,12 @@ const deleteProperty = async ({
     };
 
     const awsData = await runDbCommand(new DeleteItemCommand(params));
-    console.log('Property succesfully created in DynamoDB');
+    console.log(`Property id: ${propertyId} succesfully deleted in DynamoDB`);
     return awsData;
   } catch (error) {
     console.log(err)
   }
 };
-module.exports = { getUserProperties, createProperty, /* deleteProperty */ };
+
+
+module.exports = { getUserProperties, createProperty, updateProperty, deleteProperty };

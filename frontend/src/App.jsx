@@ -8,7 +8,7 @@ import {
 import { useAuth0 } from '@auth0/auth0-react';
 
 import routes from './routes';
-import { queryUserProperties, createPropertyInDb, deletePropertyInDb } from './utils/fetch';
+import { queryUserProperties, createPropertyInDb, updatePropertyInDb, deletePropertyInDb } from './utils/fetch';
 
 import HomePage from './pages/home-page';
 import NewPropertyPage from './pages/create-property';
@@ -60,6 +60,19 @@ const App = () => {
       await fetchProperties();
     }
   };
+
+  const handleCheckProperty = async (oldProperty, updatedProperty) => {
+    if (user) {
+      await updatePropertyInDb({
+        getAccessTokenSilently,
+        old_data: oldProperty,
+        new_data: updatedProperty,
+        userId: user.sub,
+      });
+      await fetchProperties();
+    }
+  };
+
   const handleADeleteProperty = async (oldProperty) => {
     if (user) {
       await deletePropertyInDb({

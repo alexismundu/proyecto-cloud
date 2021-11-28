@@ -5,6 +5,8 @@
   flex-direction: column;
   align-items: center;
 
+  padding: 1rem;
+
   &__title {
     padding-top: $global-top-gutter;
   }
@@ -13,5 +15,9 @@
     &__btn {
       margin-top: 20px;
     }
+  }
+
+  form {
+    padding: 1rem;
   }
 }

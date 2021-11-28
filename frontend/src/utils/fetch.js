@@ -42,6 +42,11 @@ export const fetchAPI = async ({
 export const postAPI = async (attributes) => {
   return await fetchAPI({ ...attributes, method: 'POST' });
 };
+
+export const putAPI = async (attributes) => {
+  return await fetchAPI({ ...attributes, method: 'PUT' });
+};
+
 export const deleteAPI = async (attributes) => {
   return await fetchAPI({ ...attributes, method: 'DELETE' });
 };
@@ -65,6 +70,22 @@ export const createPropertyInDb = async ({
     getAccessTokenSilently,
     data,
     restURI: `users/${userId}/properties`,
+  });
+  console.log(res);
+  return res;
+};
+
+export const updatePropertyInDb = async ({
+  getAccessTokenSilently,
+  old_data,
+  new_data,
+  userId,
+}) => {
+  const res = await putAPI({
+    getAccessTokenSilently,
+    old_data,
+    new_data,
+    restURI: `users/${userId}/checkProperty/${old_data.id}`,
   });
   console.log(res);
   return res;
