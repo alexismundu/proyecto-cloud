@@ -42,19 +42,20 @@ app.use(jsonParser);
 app.use('/api', jwtCheck, apiRouter);
 app.use('/health', healthRoutes);
 app.use('/swagger', swaggerRoutes);
+app.use('/', swaggerRoutes);
 
 // Serve the static files from the React app
-if (
-  process.env.NODE_ENV === 'production' ||
-  process.env.inbuild == 'true' ||
-  process.env.inbuild == 'yes'
-) {
-  const BUILD_PATH = path.join(__dirname, 'public', 'client', 'build');
-  console.log(`BUILD_PATH is set :${BUILD_PATH}`);
-  // logger.info(`BUILD_PATH is set :${BUILD_PATH}`);
-  app.use(express.static(BUILD_PATH));
-  app.get('*', (req, res) => res.sendFile(path.join(BUILD_PATH, 'index.html')));
-}
+// if (
+//   process.env.NODE_ENV === 'production' ||
+//   process.env.inbuild == 'true' ||
+//   process.env.inbuild == 'yes'
+// ) {
+//   const BUILD_PATH = path.join(__dirname, 'public', 'client', 'build');
+//   console.log(`BUILD_PATH is set :${BUILD_PATH}`);
+//   // logger.info(`BUILD_PATH is set :${BUILD_PATH}`);
+//   app.use(express.static(BUILD_PATH));
+//   app.get('*', (req, res) => res.sendFile(path.join(BUILD_PATH, 'index.html')));
+// }
 
 // If we make it here, we have an error
 app.use((req, res) => res.status(404).send({ ok: false, error: 'Not Found' }));

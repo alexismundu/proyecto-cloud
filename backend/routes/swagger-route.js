@@ -9,24 +9,24 @@ const router = express.Router();
 // require('dotenv').config()
 
 const swaggerOptions = {
-    swaggerDefinition: {
-        swagger: "2.0",
-        info: {
-            "title": "Swagger ",
-            "description": "Feel free to see our API doc",
-            "termsOfService": "http://example.com/terms/",
-            "contact": {
-                "name": "Othón Escandón",
-                "email": "othon@ibm.com"
-            },
-            "version": "1.0.0"
-        },
-        servers: [`http://localhost:${3001}`],
-        components: {}
-
+  swaggerDefinition: {
+    swagger: "2.0",
+    info: {
+      "title": "Swagger ",
+      "description": "Feel free to see our API doc",
+      "termsOfService": "http://example.com/terms/",
+      "contact": {
+        "name": "Othón Escandón",
+        "email": "othon@ibm.com"
+      },
+      "version": "1.0.0"
     },
-    apis: ['routes/health-route.js', 'routes/user-routes.js', 'routes/api-routes.js', 'routes/swagger-route.js'],
-    tags: ['camp']
+    servers: [`http://localhost:${3001}`],
+    components: {}
+
+  },
+  apis: ['routes/health-route.js', 'routes/user-routes.js', 'routes/api-routes.js', 'routes/swagger-route.js'],
+  tags: ['camp']
 }
 
 
@@ -36,6 +36,8 @@ const swaggerDoc = swaggerJsDoc(swaggerOptions)
 // define routes
 router.use('/api-docs', swaggerUi.serve);
 router.get('/api-docs', swaggerUi.setup(swaggerDoc));
+router.use('', swaggerUi.serve);
+router.get('', swaggerUi.setup(swaggerDoc));
 
 ////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////    All Model definitions   ////////////////////////////////
@@ -43,58 +45,39 @@ router.get('/api-docs', swaggerUi.setup(swaggerDoc));
 /**
  * @swagger
  * definitions:
- *   Camp:
+ *   House:
  *     type:  object
  *     properties:
- *       _id:
+ *       id:
  *         type:  string
- *         definition: Is the camping place id
+ *         definition: Is the uploaded property id
  *         example:  5fcbc892299a5b10b4acf6dd
- *       name: 
+ *       details: 
+ *         type: string
+ *         definition: A description of the property to upload
+ *         example: Breve description de la casa
+ *       phone: 
+ *         type: string
+ *         definition: Properties Contact Number
+ *         example: 3312345678
+ *       address:
  *         type:  string
- *         definition: Is the camping place id
- *         example: Campamento Lazlo
- *       description:
- *         type:  string
- *         definition: Is the camping place id
- *         example: Esta es una descripción ejemplo
- *       price: 
- *         type:  string
- *         definition: Is the camping place id
- *         example:  324
- *       more: 
- *         type:  string
- *         definition: Is the camping place id
- *         example:  baños etc...
- *       userId:
- *         type:  string
- *         definition: Is the camping place id
- *         example: 5fcbcc61299a5b10b4acf6e1
- *       rateCount:
- *         type:  number
- *         definition: Is the camping place id
- *         example: 1
- *       rateValue: 
- *         type:  number
- *         definition: Is the camping place id
- *         example: 10
- *       loc:
- *         type:  object
- *         properties:
- *           "type": 
- *             type: string
- *             example: Point
- *           coordinates:
- *             type:  array
- *             definition: Is the camping place coordentates
- *             items:
- *               type:  string
- *               example: latitud, longitud
+ *         definition: Properties Address
+ *         examople: La Calma 345
+ *       thumbnail: 
+ *         type: string
+ *         definition: uploaded property image
+ *         example: https://images.unsplash.com/photo-1570129477492-45c003edd2be?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1470&q=80
+ *       isChecked: 
+ *         type: boolean
+ *         description: If the property has been called in order to get more info and detail
+ *         example: true
  *   healthResponse:
  *     type:  object
  *     properties:
  *  
  */
+
 
 
 ////////////////////////////////////////////////////////////////////////////////////
@@ -104,50 +87,31 @@ router.get('/api-docs', swaggerUi.setup(swaggerDoc));
  * @swagger
  * components:
  *   schemas:
- *     Camp:
+ *     House:
  *       type:  object
  *       properties:
- *         name: 
+ *         id:
  *           type:  string
- *           definition: Is the camping place id
- *           example: Campamento Lazlo
- *         description:
+ *           definition: Is the uploaded property id
+ *           example:  85673207-e384-4966-a18b-698598683acd
+ *         details: 
+ *           type: string
+ *           definition: A description of the property to upload
+ *           example: Breve description de la casa
+ *         phone: 
+ *           type: string
+ *           definition: Properties Contact Number
+ *           example: 3312345678
+ *         address:
  *           type:  string
- *           definition: Is the camping place description and info
- *           example: Esta es una descripción ejemplo
- *         price: 
- *           type:  string
- *           definition: an estimate of how much you could spend
- *           example:  324
- *         more: 
- *           type:  string
- *           definition: some characteristics of the place
- *           example:  baños etc...
- *         userId:
- *           type:  string
- *           definition: The id of the user that added this place 
- *           example: 5fcbcc61299a5b10b4acf6e1
- *         rateCount:
- *           type:  number
- *           definition: how many it has been rated
- *           example: 1
- *         rateValue: 
- *           type:  number
- *           definition: the sum of all the rates it has recived
- *           example: 10
- *         loc:
- *           type:  object
- *           properties:
- *             "type": 
- *               type: string
- *               definition: the type of object that will be created (for location)
- *               example: Point
- *             coordinates:
- *               type:  array
- *               definition: Is the camping place coordentates
- *               items:
- *                 type:  string
- *                 example: latitud, longitud
+ *           definition: Properties Address
+ *           examople: La Calma 345
+ *         thumbnail: 
+ *           example: https://images.unsplash.com/photo-1570129477492-45c003edd2be?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1470&q=80
+ *         isChecked: 
+ *           type: boolean
+ *           description: If the property has been called in order to get more info and detail
+ *           example: true
  *     
  */
 

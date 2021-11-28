@@ -1,5 +1,9 @@
 const { runDbCommand, runDbPutItem, awsItemsToJsObj } = require('../aws');
-const { ScanCommand, PutItemCommand } = require('@aws-sdk/client-dynamodb');
+const {
+  ScanCommand,
+  PutItemCommand,
+  DeleteItemCommand
+} = require('@aws-sdk/client-dynamodb');
 const { v4: uuidv4 } = require('uuid');
 
 const TableName = 'properties';
@@ -15,7 +19,7 @@ const getUserProperties = async (userId) => {
     FilterExpression: 'userId = :userId',
     // Define the expression attribute value, which are substitutes for the values you want to compare.
     ExpressionAttributeValues: {
-      ':userId': { S: userId },
+      ':userId': { N: userId },
     },
     // Set the projection expression, which are the attributes that you want.
     ProjectionExpression: 'id, address, phone, details, thumbnail, isChecked',
@@ -23,6 +27,7 @@ const getUserProperties = async (userId) => {
   };
 
   const awsData = await runDbCommand(new ScanCommand(params));
+  console.log(`awsData`, JSON.stringify(awsData.Items[0]))
   return awsItemsToJsObj(awsData);
 };
 
@@ -52,4 +57,29 @@ const createProperty = async ({
   return awsData;
 };
 
-module.exports = { getUserProperties, createProperty };
+const deleteProperty = async ({
+  userId,
+  propertyId,
+  address,
+  phone,
+  details,
+  thumbnail,
+  isChecked,
+}) => {
+  try {
+    const params = {
+      TableName,
+      Key: {
+        id: { S: propertyId },
+        userId: { N: userId.split('|')[1] },
+      },
+    };
+
+    const awsData = await runDbCommand(new DeleteItemCommand(params));
+    console.log('Property succesfully created in DynamoDB');
+    return awsData;
+  } catch (error) {
+    console.log(err)
+  }
+};
+module.exports = { getUserProperties, createProperty, deleteProperty };

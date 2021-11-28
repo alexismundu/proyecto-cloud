@@ -3,12 +3,11 @@ import './home-page.styles.scss';
 import PropertiesList from '../../components/properties-list';
 import LogoutButton from '../../components/logout-button';
 
-function HomePage({ handleIsChecked, properties = [] }) {
+function HomePage({ handleIsChecked, handleADeleteProperty, properties = [] }) {
   return (
     <div
-      className={`home-page-container ${
-        properties.length > 0 ? '' : 'only-text'
-      }`}
+      className={`home-page-container ${properties.length > 0 ? '' : 'only-text'
+        }`}
     >
       <div className="home-page-container__logout-btn">
         <LogoutButton />
@@ -16,6 +15,7 @@ function HomePage({ handleIsChecked, properties = [] }) {
       {properties.length > 0 ? (
         <>
           <PropertiesList
+            handleADeleteProperty={handleADeleteProperty}
             properties={properties}
             handleIsChecked={handleIsChecked}
           />

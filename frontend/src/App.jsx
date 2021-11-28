@@ -8,7 +8,7 @@ import {
 import { useAuth0 } from '@auth0/auth0-react';
 
 import routes from './routes';
-import { queryUserProperties, createPropertyInDb } from './utils/fetch';
+import { queryUserProperties, createPropertyInDb, deletePropertyInDb } from './utils/fetch';
 
 import HomePage from './pages/home-page';
 import NewPropertyPage from './pages/create-property';
@@ -38,6 +38,7 @@ const App = () => {
     if (user) {
       fetchProperties();
     }
+    // eslint-disable-next-line
   }, [user]);
 
   const fetchProperties = () => {
@@ -54,6 +55,16 @@ const App = () => {
       await createPropertyInDb({
         getAccessTokenSilently,
         data: newProperty,
+        userId: user.sub,
+      });
+      await fetchProperties();
+    }
+  };
+  const handleADeleteProperty = async (oldProperty) => {
+    if (user) {
+      await deletePropertyInDb({
+        getAccessTokenSilently,
+        data: oldProperty,
         userId: user.sub,
       });
       await fetchProperties();
@@ -92,6 +103,7 @@ const App = () => {
                   path={routes.homePage}
                   element={
                     <HomePageWithSpinner
+                      handleADeleteProperty={handleADeleteProperty}
                       properties={properties}
                       isLoading={isLoadingProperties || isAuthenticationLoading}
                       handleIsChecked={handleUpdatePropertyIsChecked}

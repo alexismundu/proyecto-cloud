@@ -7,8 +7,29 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import './property-item.styles.scss';
 
 const PropertyItem = (props) => {
-  const { thumbnail, address, details, isChecked, phone, handleIsChecked } =
+  const { id, thumbnail, address, details, isChecked, phone, handleIsChecked, handleADeleteProperty } =
     props;
+
+  console.log(`props.id`, props.id)
+
+  const handleDelete = async (event) => {
+    event.preventDefault();
+
+    try {
+      handleADeleteProperty({
+        id,
+        address,
+        phone,
+        details,
+        isChecked: false,
+        thumbnail,
+      });
+      console.log('delete completed!');
+    } catch (error) {
+      console.log('error deleting property', error.message);
+    }
+  };
+
   return (
     <div className="property-item">
       {thumbnail && (
@@ -28,7 +49,7 @@ const PropertyItem = (props) => {
           ) : (
             <CheckBoxOutlineBlankIcon onClick={() => handleIsChecked(props)} />
           )}
-          <DeleteIcon />
+          <DeleteIcon onClick={handleDelete} />
         </div>
       </div>
     </div>
