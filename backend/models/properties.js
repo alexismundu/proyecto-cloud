@@ -71,7 +71,7 @@ const deleteProperty = async ({
       TableName,
       Key: {
         id: { S: propertyId },
-        userId: { N: userId.split('|')[1] },
+        userId: { S: userId },
       },
     };
 
@@ -82,4 +82,4 @@ const deleteProperty = async ({
     console.log(err)
   }
 };
-module.exports = { getUserProperties, createProperty, deleteProperty };
+module.exports = { getUserProperties, createProperty, /* deleteProperty */ };
