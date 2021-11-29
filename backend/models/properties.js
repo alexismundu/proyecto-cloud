@@ -7,6 +7,8 @@ const {
 } = require("@aws-sdk/client-dynamodb");
 const { v4: uuidv4 } = require("uuid");
 
+const { logg_into_cloud } = require("../utils/logger")
+
 const TableName = "properties";
 
 /**
@@ -28,6 +30,7 @@ const getUserProperties = async (userId) => {
   };
 
   const awsData = await runDbCommand(new ScanCommand(params));
+  // await logg_into_cloud(`The user: ${userId} fetched properties`);
   return awsItemsToJsObj(awsData);
 };
 
@@ -39,10 +42,11 @@ const createProperty = async ({
   thumbnail,
   isChecked,
 }) => {
+  const pId = uuidv4();
   const params = {
     TableName,
     Item: {
-      id: { S: uuidv4() },
+      id: { S: pId },
       userId: { S: userId },
       address: { S: address },
       phone: { S: phone },
@@ -54,6 +58,7 @@ const createProperty = async ({
 
   const awsData = await runDbCommand(new PutItemCommand(params));
   console.log("Property succesfully created in DynamoDB");
+  logg_into_cloud(`The user: ${userId} created the property with id ${pId}`);
   return awsData;
 };
 
@@ -74,6 +79,19 @@ const updateProperty = async ({ userId, propertyId, new_data }) => {
 
     const awsData = await runDbCommand(new PutItemCommand(params));
     console.log(`Property id: ${propertyId} succesfully checked in DynamoDB`);
+    logg_into_cloud(`The user: ${userId} updated the property with id ${propertyId}
+    
+      ${JSON.stringify({
+      id: { S: propertyId },
+      userId: { S: userId },
+      address: { S: new_data.address },
+      phone: { S: new_data.phone },
+      details: { S: new_data.details },
+      thumbnail: { S: new_data.thumbnail },
+      isChecked: { BOOL: new_data.isChecked }
+    })}
+    
+    `);
     return awsData;
   } catch (err) {
     console.log(err)
@@ -99,6 +117,7 @@ const deleteProperty = async ({
 
     const awsData = await runDbCommand(new DeleteItemCommand(params));
     console.log(`Property id: ${propertyId} succesfully deleted in DynamoDB`);
+    logg_into_cloud(`The user: ${userId} deleted the property with id ${propertyId}`);
     return awsData;
   } catch (err) {
     console.log(err)

@@ -3,6 +3,7 @@ const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 const { PutObjectCommand } = require("@aws-sdk/client-s3");
 const { v4: uuidv4 } = require('uuid');
 
+const { logg_into_cloud } = require("../utils/logger")
 
 const bucketName = "kasas-imgs";
 
@@ -18,6 +19,7 @@ const generateUploadURL = async ({ userId }) => {
 
     const uploadURL = await getSignedUrl(bucketClient, new PutObjectCommand(params), { expiresIn: 6000 });
     console.log('Upload Url succesfully created');
+    logg_into_cloud(`The user: ${userId} intents to upload the image ${uploadURL?.split('?')?.[0]}`);
     return uploadURL;
 
   } catch (error) {
