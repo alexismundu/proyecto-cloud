@@ -21,7 +21,7 @@ Tenemos dos tablas que son las principales y contienen toda la información vita
 
 ![image](https://user-images.githubusercontent.com/76458618/138644796-4f6fed94-5716-4dab-b25d-8c4e4dff5bc2.png)
 
-+ `Properties`: contiene los datos de las propiedades que los usuarios van agregando por medio de la aplicación.
++ `Properties`: contiene los datos de las propiedades que los usuarios van agregando por medio de la aplicación. 
 
 ![image](https://user-images.githubusercontent.com/76458618/138645045-31072743-2893-4252-89de-0f4f8011d435.png)
 
