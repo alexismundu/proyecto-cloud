@@ -1,5 +1,6 @@
 const baseApiURI = `${process.env.REACT_APP_BACKEND_URL}/api/`;
 
+
 export const fetchAPI = async ({
   getAccessTokenSilently,
   restURI = '',
@@ -83,7 +84,7 @@ export const updatePropertyInDb = async ({
 }) => {
   const res = await putAPI({
     getAccessTokenSilently,
-    data: new_data ,
+    data: new_data,
     restURI: `users/${userId}/checkProperty/${old_data.id}`,
   });
   console.log(res);
@@ -100,6 +101,35 @@ export const deletePropertyInDb = async ({
     data,
     restURI: `users/${userId}/property/${data.id}`,
   });
+  console.log(res);
+  return res;
+};
+
+export const getSecureURL = async ({
+  getAccessTokenSilently,
+
+  userId,
+}) => {
+  return await fetchAPI({
+    getAccessTokenSilently,
+    restURI: `bucket/${userId}`,
+  });
+};
+
+
+
+export const addImageInS3 = async ({
+  url,
+  file,
+}) => {
+  const res = await fetch(url, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "multipart/form-data",
+      // "Content-Type": "application/json",
+    },
+    body: file
+  })
   console.log(res);
   return res;
 };

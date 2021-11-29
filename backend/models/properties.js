@@ -80,7 +80,7 @@ const updateProperty = async ({
     const awsData = await runDbCommand(new PutItemCommand(params));
     console.log(`Property id: ${propertyId} succesfully checked in DynamoDB`);
     return awsData;
-  } catch (error) {
+  } catch (err) {
     console.log(err)
   }
 };
@@ -105,7 +105,7 @@ const deleteProperty = async ({
     const awsData = await runDbCommand(new DeleteItemCommand(params));
     console.log(`Property id: ${propertyId} succesfully deleted in DynamoDB`);
     return awsData;
-  } catch (error) {
+  } catch (err) {
     console.log(err)
   }
 };

@@ -21,6 +21,7 @@ const CreatePropertyPage = ({ handleAddProperty }) => {
     setPhone('');
     setDetails('');
     setThumbnail('');
+    setFile(null);
   };
 
   const handleSubmit = async (event) => {
@@ -33,7 +34,7 @@ const CreatePropertyPage = ({ handleAddProperty }) => {
         details,
         isChecked: false,
         thumbnail,
-      });
+      }, file?.raw);
       console.log('submit completed!');
       setDefaultState();
       navigateTo('/')
@@ -51,7 +52,7 @@ const CreatePropertyPage = ({ handleAddProperty }) => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    console.log(`event?.target?.files[0]`, event?.target?.files[0])
+
 
     switch (name) {
       case 'address':
@@ -66,7 +67,7 @@ const CreatePropertyPage = ({ handleAddProperty }) => {
       default:
         console.log(value);
         setThumbnail(value);
-        setFile(URL.createObjectURL(event?.target?.files[0]))
+        setFile({ url: URL.createObjectURL(event?.target?.files[0]), raw: event?.target?.files[0] })
         break;
     }
   };
@@ -107,8 +108,8 @@ const CreatePropertyPage = ({ handleAddProperty }) => {
             label="Agregar detalles"
           />
           <label className={`file-upload`} name="thumbnail">
-            {file ? /* eslint-disable-line*/  <a href='' className="close-button" onClick={handleImageClose} >x</a> : null}
-            {file ? <img className='img-preview' src={file} alt="Thumbnail" /> : null}
+            {file ? /* eslint-disable-line*/ <a href='' className="close-button" onClick={handleImageClose} >x</a> : null}
+            {file ? <img className='img-preview' src={file.url} alt="Error de carga" onClick={handleChange} /> : null}
             {file ? '' : 'Subir Imagen...'}
             <input
               type="file"

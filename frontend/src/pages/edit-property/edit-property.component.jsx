@@ -9,14 +9,14 @@ import './edit-property.styles.scss';
 
 const EditPropertyPage = ({ handleEditProperty }) => {
   const location = useLocation();
-  const property = {...location.state};
+  const property = { ...location.state };
   console.log(`property`, property)
   const [address, setAddress] = useState(property.address || '');
   const [phone, setPhone] = useState(property.phone || '');
   const [details, setDetails] = useState(property.details || '');
   const [thumbnail, setThumbnail] = useState('');
   const [hasChanges, setHasChanges] = useState(false);
-  const [file, setFile] = useState(property.thumbnail || '' );
+  const [file, setFile] = useState({ raw: null, url: (property.thumbnail || '') });
 
   const navigateTo = useNavigate();
 
@@ -40,7 +40,7 @@ const EditPropertyPage = ({ handleEditProperty }) => {
         details,
         isChecked: property.isChecked,
         thumbnail,
-      });
+      }, file?.raw);
       console.log('update completed!');
       setDefaultState();
       navigateTo('/')
@@ -75,7 +75,7 @@ const EditPropertyPage = ({ handleEditProperty }) => {
       default:
         console.log(value);
         setThumbnail(value);
-        setFile(URL.createObjectURL(event?.target?.files[0]))
+        setFile({ url: URL.createObjectURL(event?.target?.files[0]), raw: event?.target?.files[0] })
         break;
     }
   };
@@ -117,7 +117,7 @@ const EditPropertyPage = ({ handleEditProperty }) => {
           />
           <label className={`file-upload`} name="thumbnail">
             {file ? /* eslint-disable-line*/ <a href='' className="close-button" onClick={handleImageClose} >x</a> : null}
-            {file ? <img className='img-preview' src={file} alt="can`t show thumbnail" onClick={handleChange}/> : null}
+            {file ? <img className='img-preview' src={file.url} alt="Error de carga" onClick={handleChange} /> : null}
             {file ? '' : 'Subir Imagen...'}
             <input
               type="file"

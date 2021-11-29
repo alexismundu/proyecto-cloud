@@ -8,7 +8,14 @@ import {
 import { useAuth0 } from '@auth0/auth0-react';
 
 import routes from './routes';
-import { queryUserProperties, createPropertyInDb, updatePropertyInDb, deletePropertyInDb } from './utils/fetch';
+import {
+  queryUserProperties,
+  createPropertyInDb,
+  updatePropertyInDb,
+  deletePropertyInDb,
+  getSecureURL,
+  addImageInS3,
+} from './utils/fetch';
 
 import HomePage from './pages/home-page';
 import NewPropertyPage from './pages/create-property';
@@ -53,11 +60,12 @@ const App = () => {
     );
   };
 
-  const handleAddProperty = async (newProperty) => {
+  const handleAddProperty = async (newProperty, file) => {
     if (user) {
+      const thumbnailName = await uploadToBucket(file);
       await createPropertyInDb({
         getAccessTokenSilently,
-        data: newProperty,
+        data: { ...newProperty, thumbnail: thumbnailName },
         userId: user.sub,
       });
       await fetchProperties();
@@ -65,12 +73,13 @@ const App = () => {
     }
   };
 
-  const handleEditProperty = async (oldProperty, updatedProperty) => {
+  const handleEditProperty = async (oldProperty, updatedProperty, file) => {
     if (user) {
+      const thumbnailName = await uploadToBucket(file);
       await updatePropertyInDb({
         getAccessTokenSilently,
         old_data: oldProperty,
-        new_data: updatedProperty,
+        new_data: { ...updatedProperty, thumbnail: thumbnailName },
         userId: user.sub,
       });
       await fetchProperties();
@@ -98,6 +107,27 @@ const App = () => {
       await fetchProperties();
     }
   };
+
+  const uploadToBucket = async (file) => {
+    if (user && file) {
+      // const fileStream = fs.createReadStream(file);
+      // console.log(`fileStream`, fileStream)
+      const { url } = await getSecureURL({
+        getAccessTokenSilently,
+        // fileStream,
+        userId: user.sub,
+      });
+
+      await addImageInS3({ url, file })
+
+      return url.split('?')[0] || '';
+    }
+
+    return '';
+
+  }
+
+  // uploadToBucket()
 
   // const handleUpdatePropertyIsChecked = async (property) => {
   //   setProperties((prevProperties) =>
