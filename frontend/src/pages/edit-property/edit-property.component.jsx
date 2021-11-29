@@ -9,15 +9,14 @@ import './edit-property.styles.scss';
 
 const EditPropertyPage = ({ handleEditProperty }) => {
   const location = useLocation();
-  const property = location.state;
+  const property = {...location.state};
+  console.log(`property`, property)
   const [address, setAddress] = useState(property.address || '');
   const [phone, setPhone] = useState(property.phone || '');
   const [details, setDetails] = useState(property.details || '');
-  const [thumbnail, setThumbnail] = useState(property.thumbnail || '');
+  const [thumbnail, setThumbnail] = useState('');
   const [hasChanges, setHasChanges] = useState(false);
-
-  // console.log(`object`, URL.createObjectURL(thumbnail || ''))
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState(property.thumbnail || '' );
 
   const navigateTo = useNavigate();
 
@@ -118,7 +117,7 @@ const EditPropertyPage = ({ handleEditProperty }) => {
           />
           <label className={`file-upload`} name="thumbnail">
             {file ? /* eslint-disable-line*/ <a href='' className="close-button" onClick={handleImageClose} >x</a> : null}
-            {file ? <img className='img-preview' src={file} alt="Thumbnail" onClick={handleChange}/> : null}
+            {file ? <img className='img-preview' src={file} alt="can`t show thumbnail" onClick={handleChange}/> : null}
             {file ? '' : 'Subir Imagen...'}
             <input
               type="file"
