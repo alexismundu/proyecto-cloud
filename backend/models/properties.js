@@ -1,13 +1,13 @@
-const { runDbCommand, runDbPutItem, awsItemsToJsObj } = require('../aws');
+const { runDbCommand, runDbPutItem, awsItemsToJsObj } = require("../aws");
 const {
   ScanCommand,
   PutItemCommand,
   UpdateItemCommand,
-  DeleteItemCommand
-} = require('@aws-sdk/client-dynamodb');
-const { v4: uuidv4 } = require('uuid');
+  DeleteItemCommand,
+} = require("@aws-sdk/client-dynamodb");
+const { v4: uuidv4 } = require("uuid");
 
-const TableName = 'properties';
+const TableName = "properties";
 
 /**
  * get the associated properties linked to the userId
@@ -17,18 +17,17 @@ const getUserProperties = async (userId) => {
   // Set the parameters.
   const params = {
     // Specify which items in the results are returned.
-    FilterExpression: 'userId = :userId',
+    FilterExpression: "userId = :userId",
     // Define the expression attribute value, which are substitutes for the values you want to compare.
     ExpressionAttributeValues: {
-      ':userId': { S: userId },
+      ":userId": { S: userId },
     },
     // Set the projection expression, which are the attributes that you want.
-    ProjectionExpression: 'id, address, phone, details, thumbnail, isChecked',
+    ProjectionExpression: "id, address, phone, details, thumbnail, isChecked",
     TableName,
   };
 
   const awsData = await runDbCommand(new ScanCommand(params));
-  console.log(`Properties found for the user ${userId}: `, awsData?.Count)
   return awsItemsToJsObj(awsData);
 };
 
@@ -54,15 +53,11 @@ const createProperty = async ({
   };
 
   const awsData = await runDbCommand(new PutItemCommand(params));
-  console.log('Property succesfully created in DynamoDB');
+  console.log("Property succesfully created in DynamoDB");
   return awsData;
 };
 
-const updateProperty = async ({
-  userId,
-  propertyId,
-  new_data,
-}) => {
+const updateProperty = async ({ userId, propertyId, new_data }) => {
   try {
     const params = {
       TableName,
@@ -110,5 +105,9 @@ const deleteProperty = async ({
   }
 };
 
-
-module.exports = { getUserProperties, createProperty, updateProperty, deleteProperty };
+module.exports = {
+  getUserProperties,
+  createProperty,
+  updateProperty,
+  deleteProperty,
+};

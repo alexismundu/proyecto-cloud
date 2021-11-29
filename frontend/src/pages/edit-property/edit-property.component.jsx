@@ -25,6 +25,7 @@ const EditPropertyPage = ({ handleEditProperty }) => {
     setPhone('');
     setDetails('');
     setThumbnail('');
+    setFile({ raw: null, url: (property.thumbnail || '') });
     setHasChanges(false)
   };
 

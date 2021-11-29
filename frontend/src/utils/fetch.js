@@ -3,31 +3,31 @@ const baseApiURI = `${process.env.REACT_APP_BACKEND_URL}/api/`;
 
 export const fetchAPI = async ({
   getAccessTokenSilently,
-  restURI = '',
-  scope = '',
-  method = 'GET',
-  data = '',
+  restURI = "",
+  scope = "",
+  method = "GET",
+  data = "",
 }) => {
   const apiURI = `${baseApiURI}${restURI}`;
 
   try {
     const accessToken = await getAccessTokenSilently({
-      audience: process.env.REACT_APP_BACKEND_URL,
+      audience: process.env.REACT_APP_AUTH0_AUDIENCE_URL,
       scope,
     });
 
     const options = {
       method,
-      mode: 'cors',
+      mode: "cors",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         Authorization: `Bearer ${accessToken}`,
-        'Access-Control-Allow-Origin': '*',
+        "Access-Control-Allow-Origin": "*",
       },
     };
 
-    if (method === 'POST' || method === 'PUT') {
-      options['body'] = JSON.stringify(data);
+    if (method === "POST" || method === "PUT") {
+      options["body"] = JSON.stringify(data);
     }
 
     const res = await fetch(apiURI, options);
@@ -41,15 +41,15 @@ export const fetchAPI = async ({
 };
 
 export const postAPI = async (attributes) => {
-  return await fetchAPI({ ...attributes, method: 'POST' });
+  return await fetchAPI({ ...attributes, method: "POST" });
 };
 
 export const putAPI = async (attributes) => {
-  return await fetchAPI({ ...attributes, method: 'PUT' });
+  return await fetchAPI({ ...attributes, method: "PUT" });
 };
 
 export const deleteAPI = async (attributes) => {
-  return await fetchAPI({ ...attributes, method: 'DELETE' });
+  return await fetchAPI({ ...attributes, method: "DELETE" });
 };
 
 export const queryUserProperties = async ({
