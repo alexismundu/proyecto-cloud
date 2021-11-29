@@ -2,7 +2,7 @@
 Esta aplicación es para poder llevar aun mejor manejo de propiedades inmobiliarias, principalmente enfocado en agentes inmobiliarios, donde puedan tomar una foto de la propiedad que quiere investigar y ahí se van agregando los detalles de esta.
 
 # Arquitectura
-![ArquitecturaTecnología drawio](https://user-images.githubusercontent.com/76458618/138642739-b52b3d4e-db6c-4fdb-a8d1-8664c80728f5.png)
+![ArquitecturaTecnología drawio](https://user-images.githubusercontent.com/76458618/138642739-b52b3d4e-db6c-4fdb-a8d1-8664c80728f5.png)  
 
 # Inicio
 + `cd frontend`
