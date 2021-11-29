@@ -12,21 +12,21 @@ const swaggerOptions = {
   swaggerDefinition: {
     swagger: "2.0",
     info: {
-      "title": "Swagger ",
-      "description": "Feel free to see our API doc",
+      "title": "Kasas",
+      "description": "Documentación API de el servicio backend realizado con node.js express",
       "termsOfService": "http://example.com/terms/",
       "contact": {
-        "name": "Othón Escandón",
-        "email": "othon@ibm.com"
+        "name": "Alexis Muños & Othón Escandón",
+        // "email": "othon@ibm.com"
       },
       "version": "1.0.0"
     },
-    servers: [`http://localhost:${3001}`],
+    servers: [`http://cass`,`http://localhost:${4200}`],
     components: {}
 
   },
-  apis: ['routes/health-route.js', 'routes/user-routes.js', 'routes/api-routes.js', 'routes/swagger-route.js'],
-  tags: ['camp']
+  apis: ['routes/health-route.js', 'routes/users.js', 'routes/bucket.js', 'routes/api-routes.js', 'routes/swagger-route.js'],
+  tags: ['property']
 }
 
 
@@ -45,7 +45,7 @@ router.get('', swaggerUi.setup(swaggerDoc));
 /**
  * @swagger
  * definitions:
- *   House:
+ *   property:
  *     type:  object
  *     properties:
  *       id:
@@ -87,7 +87,7 @@ router.get('', swaggerUi.setup(swaggerDoc));
  * @swagger
  * components:
  *   schemas:
- *     House:
+ *     property:
  *       type:  object
  *       properties:
  *         id:

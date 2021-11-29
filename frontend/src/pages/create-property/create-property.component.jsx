@@ -27,6 +27,8 @@ const CreatePropertyPage = ({ handleAddProperty }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+
+    
     try {
       handleAddProperty({
         address,
