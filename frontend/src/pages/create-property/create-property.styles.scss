@@ -1,9 +1,11 @@
-@import 'src/styles/variables';
+@import "src/styles/variables";
 
 .create-property-page {
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  padding: 1rem;
 
   &__title {
     padding-top: $global-top-gutter;
@@ -12,6 +14,21 @@
   &__create-property-form {
     &__btn {
       margin-top: 20px;
+    }
+
+    .form-wrapper {
+      margin: 1rem;
+
+      input[type="file"] {
+        display: none;
+      }
+
+      .file-upload {
+        border: 1px solid #ccc;
+        display: inline-block;
+        padding: 6px 12px;
+        cursor: pointer;
+      }
     }
   }
 }

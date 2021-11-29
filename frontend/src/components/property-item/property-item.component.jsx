@@ -7,8 +7,53 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import './property-item.styles.scss';
 
 const PropertyItem = (props) => {
-  const { thumbnail, address, details, isChecked, phone, handleIsChecked } =
+  const { id, thumbnail, address, details, isChecked, phone, handleIsChecked, handleADeleteProperty } =
     props;
+
+
+  const handleDelete = async (event) => {
+    event.preventDefault();
+
+    try {
+      handleADeleteProperty({
+        id,
+        address,
+        phone,
+        details,
+        isChecked,
+        thumbnail,
+      });
+      console.log('delete completed!');
+    } catch (error) {
+      console.log('error deleting property', error.message);
+    }
+  };
+
+  const handleCheck = async (check) => {
+
+    try {
+      handleIsChecked({
+        id,
+        address,
+        phone,
+        details,
+        isChecked,
+        thumbnail,
+      }, {
+        id,
+        address,
+        phone,
+        details,
+        isChecked: check,
+        thumbnail,
+      });
+      console.log('check completed!');
+    } catch (error) {
+      console.log('error deleting property', error.message);
+    }
+
+  }
+
   return (
     <div className="property-item">
       {thumbnail && (
@@ -24,11 +69,11 @@ const PropertyItem = (props) => {
         <div className="property-item__info__right-section">
           <PhoneIcon onClick={() => window.open(`tel:${phone}`)} />
           {isChecked ? (
-            <CheckBoxIcon onClick={() => handleIsChecked(props)} />
+            <CheckBoxIcon onClick={() => handleCheck(false)} />
           ) : (
-            <CheckBoxOutlineBlankIcon onClick={() => handleIsChecked(props)} />
+            <CheckBoxOutlineBlankIcon onClick={() => handleCheck(true)} />
           )}
-          <DeleteIcon />
+          <DeleteIcon onClick={handleDelete} />
         </div>
       </div>
     </div>

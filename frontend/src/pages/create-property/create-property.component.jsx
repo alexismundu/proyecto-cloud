@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import FormInput from '../../components/form-input';
 import CustomButton from '../../components/custom-button';
 
+import { useNavigate } from 'react-router-dom';
+
 import './create-property.styles.scss';
 
 const CreatePropertyPage = ({ handleAddProperty }) => {
@@ -10,6 +12,8 @@ const CreatePropertyPage = ({ handleAddProperty }) => {
   const [phone, setPhone] = useState('');
   const [details, setDetails] = useState('');
   const [thumbnail, setThumbnail] = useState('');
+
+  const navigateTo = useNavigate();
 
   const setDefaultState = () => {
     setAddress('');
@@ -31,6 +35,7 @@ const CreatePropertyPage = ({ handleAddProperty }) => {
       });
       console.log('submit completed!');
       setDefaultState();
+      navigateTo('/')
     } catch (error) {
       console.log('error signing up', error.message);
     }
@@ -63,44 +68,53 @@ const CreatePropertyPage = ({ handleAddProperty }) => {
         className="create-property-page__create-property-form"
         onSubmit={handleSubmit}
       >
-        <FormInput
-          type="text"
-          name="address"
-          value={address}
-          onChange={handleChange}
-          label="Dirección"
-          required
-        />
-        <FormInput
-          type="tel"
-          name="phone"
-          pattern="[0-9]{10}"
-          value={phone}
-          onChange={handleChange}
-          label="Teléfono"
-          required
-        />
-        <FormInput
-          type="text"
-          name="details"
-          value={details}
-          onChange={handleChange}
-          label="Agregar detalles"
-        />
-        <label name="thumbnail">Imagen</label>
-        <br />
-        <input
-          type="file"
-          name="thumbnail"
-          value={thumbnail}
-          onChange={handleChange}
-        />
-        <CustomButton
-          type="submit"
-          className="create-property-page__create-property-form__btn"
-        >
-          Guardar
-        </CustomButton>
+        <div className="form-wrapper">
+          <FormInput
+            className="input_section"
+            type="text"
+            name="address"
+            value={address}
+            onChange={handleChange}
+            label="Dirección"
+            required
+          />
+          <FormInput
+            className="input_section"
+            type="tel"
+            name="phone"
+            pattern="[0-9]{10}"
+            value={phone}
+            onChange={handleChange}
+            label="Teléfono"
+            required
+          />
+          <FormInput
+            className="input_section"
+            type="text"
+            name="details"
+            value={details}
+            onChange={handleChange}
+            label="Agregar detalles"
+          />
+
+          <label className="file-upload" name="thumbnail">
+            Subir Imagen...
+            <input
+              type="file"
+              name="thumbnail"
+              value={thumbnail}
+              onChange={handleChange}
+            />
+          </label>
+          {/* <br /> */}
+          <CustomButton
+            type="submit"
+            className="create-property-page__create-property-form__btn"
+          >
+            Guardar
+          </CustomButton>
+
+        </div>
       </form>
     </div>
   );

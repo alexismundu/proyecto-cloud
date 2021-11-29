@@ -1,5 +1,10 @@
 const { runDbCommand, runDbPutItem, awsItemsToJsObj } = require('../aws');
-const { ScanCommand, PutItemCommand } = require('@aws-sdk/client-dynamodb');
+const {
+  ScanCommand,
+  PutItemCommand,
+  UpdateItemCommand,
+  DeleteItemCommand
+} = require('@aws-sdk/client-dynamodb');
 const { v4: uuidv4 } = require('uuid');
 
 const TableName = 'properties';
@@ -23,6 +28,7 @@ const getUserProperties = async (userId) => {
   };
 
   const awsData = await runDbCommand(new ScanCommand(params));
+  console.log(`Properties found for the user ${userId}: `, awsData?.Count)
   return awsItemsToJsObj(awsData);
 };
 
@@ -52,4 +58,57 @@ const createProperty = async ({
   return awsData;
 };
 
-module.exports = { getUserProperties, createProperty };
+const updateProperty = async ({
+  userId,
+  propertyId,
+  new_data,
+}) => {
+  try {
+    const params = {
+      TableName,
+      Item: {
+        id: { S: propertyId },
+        userId: { S: userId },
+        address: { S: new_data.address },
+        phone: { S: new_data.phone },
+        details: { S: new_data.details },
+        thumbnail: { S: new_data.thumbnail },
+        isChecked: { BOOL: new_data.isChecked },
+      },
+    };
+
+    const awsData = await runDbCommand(new PutItemCommand(params));
+    console.log(`Property id: ${propertyId} succesfully checked in DynamoDB`);
+    return awsData;
+  } catch (error) {
+    console.log(err)
+  }
+};
+const deleteProperty = async ({
+  userId,
+  propertyId,
+  // address,
+  // phone,
+  // details,
+  // thumbnail,
+  // isChecked,
+}) => {
+  try {
+    const params = {
+      TableName,
+      Key: {
+        id: { S: propertyId },
+        userId: { S: userId },
+      },
+    };
+
+    const awsData = await runDbCommand(new DeleteItemCommand(params));
+    console.log(`Property id: ${propertyId} succesfully deleted in DynamoDB`);
+    return awsData;
+  } catch (error) {
+    console.log(err)
+  }
+};
+
+
+module.exports = { getUserProperties, createProperty, updateProperty, deleteProperty };

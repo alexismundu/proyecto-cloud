@@ -3,7 +3,7 @@ import PropertyItem from '../property-item';
 
 import './properties-list.styles.scss';
 
-const PropertiesList = ({ handleIsChecked, properties }) => {
+const PropertiesList = ({ handleIsChecked,handleADeleteProperty, properties }) => {
   return (
     <div className="properties-list">
       {properties.map((property) => (
@@ -11,6 +11,7 @@ const PropertiesList = ({ handleIsChecked, properties }) => {
           key={property.id}
           {...property}
           handleIsChecked={handleIsChecked}
+          handleADeleteProperty={handleADeleteProperty}
         />
       ))}
     </div>
