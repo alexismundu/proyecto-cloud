@@ -3,15 +3,20 @@ import React, { useState } from 'react';
 import FormInput from '../../components/form-input';
 import CustomButton from '../../components/custom-button';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
-import './create-property.styles.scss';
+import './edit-property.styles.scss';
 
-const CreatePropertyPage = ({ handleAddProperty }) => {
-  const [address, setAddress] = useState('');
-  const [phone, setPhone] = useState('');
-  const [details, setDetails] = useState('');
-  const [thumbnail, setThumbnail] = useState('');
+const EditPropertyPage = ({ handleEditProperty }) => {
+  const location = useLocation();
+  const property = location.state;
+  const [address, setAddress] = useState(property.address || '');
+  const [phone, setPhone] = useState(property.phone || '');
+  const [details, setDetails] = useState(property.details || '');
+  const [thumbnail, setThumbnail] = useState(property.thumbnail || '');
+  const [hasChanges, setHasChanges] = useState(false);
+
+  // console.log(`object`, URL.createObjectURL(thumbnail || ''))
   const [file, setFile] = useState(null);
 
   const navigateTo = useNavigate();
@@ -21,20 +26,23 @@ const CreatePropertyPage = ({ handleAddProperty }) => {
     setPhone('');
     setDetails('');
     setThumbnail('');
+    setHasChanges(false)
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      handleAddProperty({
+      handleEditProperty({ ...property }, {
+        id: property.id,
+        userId: property.userId,
         address,
         phone,
         details,
-        isChecked: false,
+        isChecked: property.isChecked,
         thumbnail,
       });
-      console.log('submit completed!');
+      console.log('update completed!');
       setDefaultState();
       navigateTo('/')
     } catch (error) {
@@ -51,7 +59,9 @@ const CreatePropertyPage = ({ handleAddProperty }) => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    console.log(`event?.target?.files[0]`, event?.target?.files[0])
+
+
+    setHasChanges(true);
 
     switch (name) {
       case 'address':
@@ -72,10 +82,10 @@ const CreatePropertyPage = ({ handleAddProperty }) => {
   };
 
   return (
-    <div className="create-property-page">
-      <h1 className="create-property-page__title">Registrar propiedad</h1>
+    <div className="edit-property-page">
+      <h1 className="edit-property-page__title">Registrar propiedad</h1>
       <form
-        className="create-property-page__create-property-form"
+        className="edit-property-page__edit-property-form"
         onSubmit={handleSubmit}
       >
         <div className="form-wrapper">
@@ -107,8 +117,8 @@ const CreatePropertyPage = ({ handleAddProperty }) => {
             label="Agregar detalles"
           />
           <label className={`file-upload`} name="thumbnail">
-            {file ? /* eslint-disable-line*/  <a href='' className="close-button" onClick={handleImageClose} >x</a> : null}
-            {file ? <img className='img-preview' src={file} alt="Thumbnail" /> : null}
+            {file ? /* eslint-disable-line*/ <a href='' className="close-button" onClick={handleImageClose} >x</a> : null}
+            {file ? <img className='img-preview' src={file} alt="Thumbnail" onClick={handleChange}/> : null}
             {file ? '' : 'Subir Imagen...'}
             <input
               type="file"
@@ -118,10 +128,11 @@ const CreatePropertyPage = ({ handleAddProperty }) => {
             />
           </label>
           <CustomButton
+            disabled={!hasChanges}
             type="submit"
-            className="create-property-page__create-property-form__btn"
+            className="edit-property-page__edit-property-form__btn"
           >
-            Guardar
+            Actualizar
           </CustomButton>
 
         </div>
@@ -130,4 +141,4 @@ const CreatePropertyPage = ({ handleAddProperty }) => {
   );
 };
 
-export default CreatePropertyPage;
+export default EditPropertyPage;

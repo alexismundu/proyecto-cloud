@@ -4,12 +4,15 @@ import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import DeleteIcon from '@mui/icons-material/Delete';
 
+import { useNavigate } from 'react-router-dom';
+
 import './property-item.styles.scss';
 
 const PropertyItem = (props) => {
   const { id, thumbnail, address, details, isChecked, phone, handleIsChecked, handleADeleteProperty } =
     props;
 
+  const navigateTo = useNavigate();
 
   const handleDelete = async (event) => {
     event.preventDefault();
@@ -55,7 +58,17 @@ const PropertyItem = (props) => {
   }
 
   return (
-    <div className="property-item">
+    <div className="property-item"
+      onClick={() => navigateTo(`/edit-property/${id}`, {
+        state: {
+          id,
+          address,
+          phone,
+          details,
+          isChecked,
+          thumbnail,
+        }
+      })}>
       {thumbnail && (
         <img src={thumbnail} alt={thumbnail} className="property-item__img" />
       )}

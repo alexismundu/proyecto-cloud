@@ -1,6 +1,6 @@
 @import "src/styles/variables";
 
-.create-property-page {
+.edit-property-page {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -11,10 +11,18 @@
     padding-top: $global-top-gutter;
   }
 
-  &__create-property-form {
+  &__edit-property-form {
     &__btn {
       margin-top: 20px;
       margin-bottom: 4rem;
+
+      &[disabled],
+      &[disabled]:hover {
+        background-color: gray;
+        color: white;
+        border: none;
+        cursor: not-allowed;
+      }
     }
 
     .form-wrapper {

@@ -12,6 +12,7 @@ import { queryUserProperties, createPropertyInDb, updatePropertyInDb, deleteProp
 
 import HomePage from './pages/home-page';
 import NewPropertyPage from './pages/create-property';
+import EditPropertyPage from './pages/edit-property';
 import LoginPage from './pages/login';
 import AppBar from './components/app-bar';
 import WithSpinner from './components/with-spinner';
@@ -64,6 +65,17 @@ const App = () => {
     }
   };
 
+  const handleEditProperty = async (oldProperty, updatedProperty) => {
+    if (user) {
+      await updatePropertyInDb({
+        getAccessTokenSilently,
+        old_data: oldProperty,
+        new_data: updatedProperty,
+        userId: user.sub,
+      });
+      await fetchProperties();
+    }
+  };
   const handleCheckProperty = async (oldProperty, updatedProperty) => {
     if (user) {
       await updatePropertyInDb({
@@ -112,6 +124,14 @@ const App = () => {
                   path={routes.createProperty}
                   element={
                     <NewPropertyPage handleAddProperty={handleAddProperty} />
+                  }
+                />
+                <Route
+                  exact
+                  path={routes.editProperty}
+                  element={
+                    <EditPropertyPage handleEditProperty={handleEditProperty}
+                    />
                   }
                 />
                 <Route
