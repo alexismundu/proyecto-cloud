@@ -75,7 +75,7 @@ const App = () => {
 
   const handleEditProperty = async (oldProperty, updatedProperty, file) => {
     if (user) {
-      const thumbnailName = await uploadToBucket(file);
+      const thumbnailName = (file) ? await uploadToBucket(file) : oldProperty.thumbnail;
       await updatePropertyInDb({
         getAccessTokenSilently,
         old_data: oldProperty,
